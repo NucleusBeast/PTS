@@ -1,0 +1,102 @@
+version: "3.8"
+
+services:
+  namenode:
+    image: apache/hadoop:3.4.1
+    container_name: namenode
+    hostname: namenode
+    environment:
+      HADOOP_HEAPSIZE: "512"
+      HADOOP_NAMENODE_INIT_HEAPSIZE: "256"
+    ports:
+      - "9870:9870"
+      - "9000:9000"
+    volumes:
+      - ./conf/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
+      - ./conf/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
+      - ./csv/habits_rows.csv:/home/habits_rows.csv
+      - ./csv/tasks_rows.csv:/home/tasks_rows.csv
+      - namenode_data:/hadoop/dfs/name
+    command: |
+      sh -c "
+      hdfs namenode -format || true &&
+      hdfs namenode
+      "
+    networks:
+      - hadoop
+
+  datanode1:
+    image: apache/hadoop:3.4.1
+    container_name: datanode1
+    hostname: datanode1
+    environment:
+      HADOOP_HEAPSIZE: "256"
+    ports:
+      - "9864:9864"
+    volumes:
+      - ./conf/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
+      - ./conf/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
+      - datanode1_data:/hadoop/dfs/data
+    command: |
+      sh -c "
+      sleep 10 &&
+      hdfs datanode
+      "
+    depends_on:
+      - namenode
+    networks:
+      - hadoop
+
+  datanode2:
+    image: apache/hadoop:3.4.1
+    container_name: datanode2
+    hostname: datanode2
+    environment:
+      HADOOP_HEAPSIZE: "256"
+    ports:
+      - "9865:9864"
+    volumes:
+      - ./conf/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
+      - ./conf/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
+      - datanode2_data:/hadoop/dfs/data
+    command: |
+      sh -c "
+      sleep 10 &&
+      hdfs datanode
+      "
+    depends_on:
+      - namenode
+    networks:
+      - hadoop
+
+  datanode3:
+    image: apache/hadoop:3.4.1
+    container_name: datanode3
+    hostname: datanode3
+    environment:
+      HADOOP_HEAPSIZE: "256"
+    ports:
+      - "9869:9864"
+    volumes:
+      - ./conf/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
+      - ./conf/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
+      - datanode3_data:/hadoop/dfs/data
+    command: |
+      sh -c "
+      sleep 10 &&
+      hdfs datanode
+      "
+    depends_on:
+      - namenode
+    networks:
+      - hadoop
+
+volumes:
+  namenode_data:
+  datanode1_data:
+  datanode2_data:
+  datanode3_data:
+
+networks:
+  hadoop:
+    driver: bridge

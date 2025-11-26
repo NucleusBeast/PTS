@@ -1,0 +1,7 @@
+id,title,description,currentValue,targetValue,unit,completed,date,isPunishment,isManualTask,createdAt
+3318b691-668e-41c9-8867-99562965ce5a,getter,,,,,true,2025-10-14,false,true,2025-10-21 08:53:57.288207+00
+5a09421c-e1be-484a-8743-4fb591c801ff,Do homework,For school,1,1,homework,false,2025-11-11,false,true,2025-10-24 09:01:27.917937+00
+7675e190-4582-444d-9929-c28d5ea2764d,nnn,,,,,true,2025-10-04,false,true,2025-10-23 11:42:23.431764+00
+a7efa9e2-e0e2-44a3-bfbe-d53cd9f318f9,test,,,,,false,2025-10-15,false,true,2025-10-23 13:23:12.303488+00
+a9ed6b9a-1ec8-4e60-b57e-8987ae0773c9,lala,,,,,false,2025-10-04,false,true,2025-10-23 13:23:25.415605+00
+db4372f6-ece1-4861-b6d1-c513dd76958e,test21,,,,,false,2025-10-21,false,true,2025-10-21 11:42:47.601891+00
