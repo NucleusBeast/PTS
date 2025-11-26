@@ -1,3 +1,5 @@
+hadoop: vaja 1
+
 - ustvari nov imenik in naloži datoteko CSV v ustvarjen imenik,
 - ustvari nov podimenik v ustvarjenem imeniku in kopiraj ali premakni naloženo datoteko v podimenik,
 - izpiši vse imenike in datoteke v ustvarjenem imeniku ter izpiši vse imenike in datoteke v ustvarjenem podimeniku,
@@ -36,3 +38,15 @@ docker exec namenode hdfs dfs -stat "Block Size: %b bytes, Replication: %r" /dat
 
 # 7. Poročilo o gruči
 docker exec namenode hdfs dfsadmin -report
+
+
+hadoop: vaja 2
+
+docker cp .\mapper.py namenode:/home/mapper.py
+docker cp .\reducer.py namenode:/home/reducer.py
+
+#v STOPPED vrsti (development)
+docker exec namenode bash -lc "hadoop jar /opt/hadoop/share/hadoop/tools/lib/hadoop-streaming-*.jar -D mapreduce.job.queuename=development -D mapreduce.job.name='habits-streaming-dev' -files /home/mapper.py,/home/reducer.py -mapper 'python /home/mapper.py' -reducer 'python /home/reducer.py' -input hdfs:///data/supabase/tasks_rows.csv -output hdfs:///output/tasks_streaming_dev_$(date +%s)"
+
+ RUNNING vrsti (production)
+docker exec namenode bash -lc "OUT=/output/tasks_streaming_prod_$(date +%s) && hdfs dfs -rm -r -f \"$OUT\" >/dev/null 2>&1 || true && hadoop jar /opt/hadoop/share/hadoop/tools/lib/hadoop-streaming-*.jar -D mapreduce.job.queuename=production -D mapreduce.job.name='habits-streaming-prod' -D mapreduce.map.memory.mb=256 -D mapreduce.reduce.memory.mb=256 -files /home/mapper.py,/home/reducer.py -mapper 'python /home/mapper.py' -reducer 'python /home/reducer.py' -input hdfs:///data/supabase/tasks_rows.csv -output hdfs:///$OUT && hdfs dfs -cat \"$OUT/part-*\""

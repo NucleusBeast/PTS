@@ -17,6 +17,8 @@ services:
       - ./csv/habits_rows.csv:/home/habits_rows.csv
       - ./csv/tasks_rows.csv:/home/tasks_rows.csv
       - namenode_data:/hadoop/dfs/name
+      - ./python/mapper.py:/home/mapper.py
+      - ./python/reducer.py:/home/reducer.py
     command: |
       sh -c "
       hdfs namenode -format || true &&
@@ -91,11 +93,117 @@ services:
     networks:
       - hadoop
 
+  resourcemanager:
+    image: apache/hadoop:3.4.1
+    container_name: resourcemanager
+    hostname: resourcemanager
+    ports:
+      - "8088:8088"
+    environment:
+      HADOOP_CONF_DIR: /etc/hadoop/conf
+      HADOOP_HEAPSIZE: "512"
+    volumes:
+      - ./conf/core-site.xml:/etc/hadoop/conf/core-site.xml
+      - ./conf/hdfs-site.xml:/etc/hadoop/conf/hdfs-site.xml
+      - ./conf/yarn-site.xml:/etc/hadoop/conf/yarn-site.xml
+      - ./conf/capacity-scheduler.xml:/etc/hadoop/conf/capacity-scheduler.xml
+    command: yarn resourcemanager
+    depends_on:
+      - namenode
+    networks:
+      - hadoop
+
+  nodemanager1:
+    image: apache/hadoop:3.4.1
+    container_name: nodemanager1
+    hostname: nodemanager1
+    ports:
+      - "8042:8042"
+    environment:
+      HADOOP_CONF_DIR: /etc/hadoop/conf
+      HADOOP_HEAPSIZE: "256"
+    volumes:
+      - ./conf/core-site.xml:/etc/hadoop/conf/core-site.xml
+      - ./conf/hdfs-site.xml:/etc/hadoop/conf/hdfs-site.xml
+      - ./conf/yarn-site.xml:/etc/hadoop/conf/yarn-site.xml
+      - ./conf/capacity-scheduler.xml:/etc/hadoop/conf/capacity-scheduler.xml
+      - ./conf/mapred-site.xml:/etc/hadoop/conf/mapred-site.xml
+
+    command: yarn nodemanager
+    depends_on:
+      - resourcemanager
+    networks:
+      - hadoop
+
+  nodemanager2:
+    image: apache/hadoop:3.4.1
+    container_name: nodemanager2
+    hostname: nodemanager2
+    ports:
+      - "8043:8042"
+    environment:
+      HADOOP_CONF_DIR: /etc/hadoop/conf
+      HADOOP_HEAPSIZE: "256"
+    volumes:
+      - ./conf/core-site.xml:/etc/hadoop/conf/core-site.xml
+      - ./conf/hdfs-site.xml:/etc/hadoop/conf/hdfs-site.xml
+      - ./conf/yarn-site.xml:/etc/hadoop/conf/yarn-site.xml
+      - ./conf/capacity-scheduler.xml:/etc/hadoop/conf/capacity-scheduler.xml
+      - ./conf/mapred-site.xml:/etc/hadoop/conf/mapred-site.xml
+    command: yarn nodemanager
+    depends_on:
+      - resourcemanager
+    networks:
+      - hadoop
+
+  nodemanager3:
+    image: apache/hadoop:3.4.1
+    container_name: nodemanager3
+    hostname: nodemanager3
+    ports:
+      - "8044:8042"
+    environment:
+      HADOOP_CONF_DIR: /etc/hadoop/conf
+      HADOOP_HEAPSIZE: "256"
+    volumes:
+      - ./conf/core-site.xml:/etc/hadoop/conf/core-site.xml
+      - ./conf/hdfs-site.xml:/etc/hadoop/conf/hdfs-site.xml
+      - ./conf/yarn-site.xml:/etc/hadoop/conf/yarn-site.xml
+      - ./conf/capacity-scheduler.xml:/etc/hadoop/conf/capacity-scheduler.xml
+      - ./conf/mapred-site.xml:/etc/hadoop/conf/mapred-site.xml
+    command: yarn nodemanager
+    depends_on:
+      - resourcemanager
+    networks:
+      - hadoop
+
+  historyserver:
+    image: apache/hadoop:3.4.1
+    container_name: historyserver
+    hostname: historyserver
+    ports:
+      - "19888:19888"
+    environment:
+      HADOOP_CONF_DIR: /etc/hadoop/conf
+      HADOOP_HEAPSIZE: "256"
+    volumes:
+      - ./conf/core-site.xml:/etc/hadoop/conf/core-site.xml
+      - ./conf/hdfs-site.xml:/etc/hadoop/conf/hdfs-site.xml
+      - ./conf/yarn-site.xml:/etc/hadoop/conf/yarn-site.xml
+      - ./conf/mapred-site.xml:/etc/hadoop/conf/mapred-site.xml
+      - historyserver_data:/hadoop/yarn/timeline
+    command: mapred historyserver
+    depends_on:
+      - resourcemanager
+    networks:
+      - hadoop
+
 volumes:
   namenode_data:
   datanode1_data:
   datanode2_data:
   datanode3_data:
+  historyserver_data:
 
 networks:
   hadoop:
