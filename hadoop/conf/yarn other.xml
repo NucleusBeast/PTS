@@ -1,8 +1,0 @@
-<property>
-  <name>yarn.resourcemanager.scheduler.address</name>
-  <value>resourcemanager:8030</value>
-</property>
-<property>
-  <name>yarn.resourcemanager.resource-tracker.address</name>
-  <value>resourcemanager:8031</value>
-</property>

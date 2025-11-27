@@ -1,17 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
-  <!-- A few generic scheduler knobs; queues themselves are defined in yarn-site.xml above -->
-  <property>
-    <name>yarn.scheduler.capacity.maximum-applications</name>
-    <value>10000</value>
-  </property>
-  <property>
-    <name>yarn.scheduler.capacity.maximum-am-resource-percent</name>
-    <value>0.1</value>
-  </property>
-  <property>
-    <name>yarn.scheduler.capacity.node-locality-delay</name>
-    <value>40</value>
-  </property>
+<!-- CapacityScheduler queues definition (top-level) -->
+<property>
+  <name>yarn.scheduler.capacity.root.queues</name>
+  <value>production,development</value>
+</property>
+
+<!-- Queue capacities and state -->
+<property>
+  <name>yarn.scheduler.capacity.root.production.capacity</name>
+  <value>60</value>
+</property>
+<property>
+  <name>yarn.scheduler.capacity.root.production.maximum-capacity</name>
+  <value>100</value>
+</property>
+<property>
+  <name>yarn.scheduler.capacity.root.production.state</name>
+  <value>RUNNING</value>
+</property>
+
+<property>
+  <name>yarn.scheduler.capacity.root.development.capacity</name>
+  <value>40</value>
+</property>
+<property>
+  <name>yarn.scheduler.capacity.root.development.maximum-capacity</name>
+  <value>100</value>
+</property>
+<property>
+  <name>yarn.scheduler.capacity.root.development.state</name>
+  <value>STOPPED</value>
+</property>
 </configuration>

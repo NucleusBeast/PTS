@@ -14,6 +14,10 @@ services:
     volumes:
       - ./conf/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
       - ./conf/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
+      - ./conf/yarn-site.xml:/opt/hadoop/etc/hadoop/yarn-site.xml
+      - ./conf/mapred-site.xml:/opt/hadoop/etc/hadoop/mapred-site.xml
+      - ./conf/capacity-scheduler.xml:/opt/hadoop/etc/hadoop/capacity-scheduler.xml
+      - ./conf/resource-types.xml:/etc/hadoop/conf/resource-types.xml
       - ./csv/habits_rows.csv:/home/habits_rows.csv
       - ./csv/tasks_rows.csv:/home/tasks_rows.csv
       - namenode_data:/hadoop/dfs/name
@@ -38,6 +42,10 @@ services:
     volumes:
       - ./conf/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
       - ./conf/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
+      - ./conf/yarn-site.xml:/opt/hadoop/etc/hadoop/yarn-site.xml
+      - ./conf/mapred-site.xml:/opt/hadoop/etc/hadoop/mapred-site.xml
+      - ./conf/capacity-scheduler.xml:/opt/hadoop/etc/hadoop/capacity-scheduler.xml
+      - ./conf/resource-types.xml:/etc/hadoop/conf/resource-types.xml
       - datanode1_data:/hadoop/dfs/data
     command: |
       sh -c "
@@ -60,6 +68,9 @@ services:
     volumes:
       - ./conf/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
       - ./conf/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
+      - ./conf/yarn-site.xml:/opt/hadoop/etc/hadoop/yarn-site.xml
+      - ./conf/mapred-site.xml:/opt/hadoop/etc/hadoop/mapred-site.xml
+      - ./conf/capacity-scheduler.xml:/opt/hadoop/etc/hadoop/capacity-scheduler.xml
       - datanode2_data:/hadoop/dfs/data
     command: |
       sh -c "
@@ -82,6 +93,9 @@ services:
     volumes:
       - ./conf/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
       - ./conf/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
+      - ./conf/yarn-site.xml:/opt/hadoop/etc/hadoop/yarn-site.xml
+      - ./conf/mapred-site.xml:/opt/hadoop/etc/hadoop/mapred-site.xml
+      - ./conf/capacity-scheduler.xml:/opt/hadoop/etc/hadoop/capacity-scheduler.xml
       - datanode3_data:/hadoop/dfs/data
     command: |
       sh -c "
@@ -107,6 +121,7 @@ services:
       - ./conf/hdfs-site.xml:/etc/hadoop/conf/hdfs-site.xml
       - ./conf/yarn-site.xml:/etc/hadoop/conf/yarn-site.xml
       - ./conf/capacity-scheduler.xml:/etc/hadoop/conf/capacity-scheduler.xml
+      - ./conf/mapred-site.xml:/etc/hadoop/conf/mapred-site.xml
     command: yarn resourcemanager
     depends_on:
       - namenode

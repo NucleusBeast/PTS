@@ -1,35 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
-  <!-- Use YARN as the execution framework -->
   <property>
     <name>mapreduce.framework.name</name>
     <value>yarn</value>
   </property>
 
-  <!-- HistoryServer locations -->
   <property>
-    <name>mapreduce.jobhistory.address</name>
-    <value>historyserver:10020</value>
+    <name>yarn.app.mapreduce.am.env</name>
+    <value>HADOOP_MAPRED_HOME=/opt/hadoop</value>
   </property>
   <property>
-    <name>mapreduce.jobhistory.webapp.address</name>
-    <value>historyserver:19888</value>
-  </property>
-
-  <!-- Where MR writes intermediate/final history in HDFS -->
-  <property>
-    <name>mapreduce.jobhistory.done-dir</name>
-    <value>/mr-history/done</value>
+    <name>mapreduce.map.env</name>
+    <value>HADOOP_MAPRED_HOME=/opt/hadoop</value>
   </property>
   <property>
-    <name>mapreduce.jobhistory.intermediate-done-dir</name>
-    <value>/mr-history/done_intermediate</value>
-  </property>
-
-  <!-- Staging dir for apps (must exist and be writable) -->
-  <property>
-    <name>yarn.app.mapreduce.am.staging-dir</name>
-    <value>/user</value>
+    <name>mapreduce.reduce.env</name>
+    <value>HADOOP_MAPRED_HOME=/opt/hadoop</value>
   </property>
 </configuration>
