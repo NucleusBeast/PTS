@@ -41,5 +41,10 @@ services:
       - minio
     volumes:
       - ./data:/data
+      - ./ext/nifi-parquet-nar-2.6.0.nar:/opt/nifi/nifi-current/nar_extensions/nifi-parquet-nar-2.6.0.nar
+      - ./ext/nifi-hadoop-libraries-nar-2.6.0.nar:/opt/nifi/nifi-current/nar_extensions/nifi-hadoop-libraries-nar-2.6.0.nar
+      - ./ext/postgresql-42.7.8.jar:/opt/nifi/lib/postgresql-42.7.8.jar
+      - ./csv:/opt/nifi/csv
+      - ./csv:/home/csv
 networks:
   minio-net:
