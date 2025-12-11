@@ -1,0 +1,23 @@
+services:
+  spark-master:
+    image: spark:latest
+    command: bash -c "/opt/spark/sbin/start-master.sh && sleep infinity"
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+      - "4040:4040"
+
+  spark-worker:
+    image: spark:latest
+    command: bash -c "/opt/spark/sbin/start-worker.sh spark://spark-master:7077 && sleep infinity"
+    ports:
+      - "8081:8081"
+
+  jupyter:
+    image: quay.io/jupyter/pyspark-notebook
+    ports:
+      - "8888:8888"
+    environment:
+      - JUPYTER_TOKEN=secret
+    volumes:
+      - ./notebooks:/home/jovyan
