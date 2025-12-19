@@ -1,3 +1,11 @@
 {
-    \"type\": \"string\"
+  \"type\": \"record\",
+  \"name\": \"Student\",
+  \"namespace\": \"com.example\",
+  \"fields\": [
+    { \"name\": \"id\", \"type\": \"int\" },
+    { \"name\": \"name\", \"type\": \"string\" },
+    { \"name\": \"age\", \"type\": [\"null\", \"int\"], \"default\": null },
+    { \"name\": \"email\", \"type\": [\"null\", \"string\"], \"default\": null }
+  ]
 }
