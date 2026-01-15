@@ -1,0 +1,6 @@
+version: "2"
+authtoken: 38JHrUCkXeO1tmgMvWAMWqWbwsF_3KDE99Ux4CFJEduuBjP9k
+tunnels:
+  webhook:
+    addr: webhook-service:3001
+    proto: http

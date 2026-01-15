@@ -1,0 +1,17 @@
+{
+  "name": "task-events-cassandra-sink",
+  "config": {
+    "connector.class": "com.datastax.oss.kafka.sink.CassandraSinkConnector",
+    "tasks.max": "1",
+    "topics": "task-events",
+    "contactPoints": "cassandra",
+    "port": 9042,
+    "loadBalancing.localDc": "datacenter1",
+    "topic.task-events.habit_ks.task_events.mapping": "event_id=value.event_id, task_id=value.task_id, user_id=value.user_id, action=value.action, title=value.title, completed=value.completed, date=value.date, timestamp=value.timestamp, source=value.source, metadata=value.metadata, schema_version=value.schema_version",
+    "topic.task-events.codec.locale": "en_US",
+    "topic.task-events.codec.timeZone": "UTC",
+    "value.converter": "io.confluent.connect.avro.AvroConverter",
+    "value.converter.schema.registry.url": "http://schema-registry:8087",
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter"
+  }
+}

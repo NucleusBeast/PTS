@@ -1,0 +1,27 @@
+﻿{
+    "name":  "supabase-postgres-cdc",
+    "config":  {
+                   "connector.class":  "io.debezium.connector.postgresql.PostgresConnector",
+                   "database.hostname":  "aws-1-eu-north-1.pooler.supabase.com",
+                   "database.port":  "5432",
+                   "database.user":  "postgres.lywlnngrukhrdyncrjwe",
+                   "database.password":  "ptsvajakafka",
+                   "database.dbname":  "postgres",
+                   "database.sslmode":  "require",
+                   "database.sslfactory":  "org.postgresql.ssl.NonValidatingFactory",
+                   "database.server.name":  "supabase-habit",
+                   "topic.prefix": "supabase-habit",
+                   "plugin.name":  "pgoutput",
+                   "table.include.list":  "public.tasks",
+                   "publication.name":  "debezium_publication",
+                   "slot.name":  "debezium_slot",
+                   "publication.autocreate.mode":  "all_tables",
+                   "transforms":  "TimestampConverter",
+                   "transforms.TimestampConverter.type":  "org.apache.kafka.connect.transforms.Cast$Value",
+                   "transforms.TimestampConverter.spec":  "created_at:string,updated_at:string",
+                   "decimal.handling.mode":  "string",
+                   "snapshot.mode":  "initial",
+                   "heartbeat.interval.ms":  "10000",
+                   "heartbeat.action.query":  "SELECT 1"
+               }
+}

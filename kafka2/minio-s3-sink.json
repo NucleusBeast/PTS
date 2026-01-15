@@ -1,0 +1,25 @@
+{
+  "name": "minio-s3-sink",
+  "config": {
+    "connector.class": "io.confluent.connect.s3.S3SinkConnector",
+    "tasks.max": "1",
+    "topics": "supabase-habit.public.tasks",
+    "s3.bucket.name": "datalake",
+    "s3.region": "us-east-1",
+    "s3.part.size": "5242880",
+    "flush.size": "1000",
+    "rotate.interval.ms": "3600000",
+    "storage.class": "io.confluent.connect.s3.storage.S3Storage",
+    "format.class": "io.confluent.connect.s3.format.parquet.ParquetFormat",
+    "s3.compression.type": "snappy",
+    "schema.compatibility": "FORWARD",
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "io.confluent.connect.avro.AvroConverter",
+    "value.converter.schema.registry.url": "http://schema-registry:8087",
+    "store.kafka.keys": "true",
+    "store.kafka.headers": "true",
+    "s3.path.style": "path",
+    "store.kafka.metadata": "true",
+    "topics.dir": "bronze/cdc/tasks"
+  }
+}

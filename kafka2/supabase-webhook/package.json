@@ -1,0 +1,15 @@
+{
+  "name": "supabase-webhook-to-kafka",
+  "version": "1.0.0",
+  "description": "Supabase Database Webhooks to Kafka CDC Bridge",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "kafkajs": "^2.2.4",
+    "body-parser": "^1.20.2"
+  }
+}

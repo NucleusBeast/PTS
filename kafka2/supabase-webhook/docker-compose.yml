@@ -1,0 +1,32 @@
+services:
+  webhook-service:
+    build: .
+    container_name: supabase-webhook-bridge
+    ports:
+      - "3001:3001"
+    networks:
+      - kafka2_default
+    environment:
+      - KAFKA_BROKER=kafka-broker:29092
+    depends_on:
+      - ngrok
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: ngrok-tunnel
+    restart: unless-stopped
+    command:
+      - "start"
+      - "--all"
+      - "--config"
+      - "/etc/ngrok.yml"
+    volumes:
+      - ./ngrok.yml:/etc/ngrok.yml
+    ports:
+      - "4040:4040"  # ngrok web UI
+    networks:
+      - kafka2_default
+
+networks:
+  kafka2_default:
+    external: true
