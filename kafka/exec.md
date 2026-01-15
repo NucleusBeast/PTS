@@ -1,3 +1,5 @@
+ 19.12.2025
+ 
  # Nekaj ukazov
 kafka-topics --bootstrap-server kafka-broker:29092 --describe
 kafka-topics --bootstrap-server kafka-broker:29092 --create --topic imeteme
